@@ -11,8 +11,8 @@ def highlight_max(s, props=""):
 
 
 def local_view(graph, v, to_highlight=None, axis=1):
-    right = graph.vertex_to_neighbours_right[v]
-    left = graph.vertex_to_neighbours_left[v]
+    right = graph.vertex_to_neighbours_B[v]
+    left = graph.vertex_to_neighbours_A[v]
     df = pd.DataFrame(
         graph.vertex_to_squares[v], index=pd.Index(left), columns=pd.Index(right, name="")
     )
@@ -65,7 +65,7 @@ def local_view(graph, v, to_highlight=None, axis=1):
 
 
 def show_common(graph, v1, v2, side):
-    if side == "left":
+    if side == "A":
         axis = 1
     else:
         axis = 0
@@ -85,8 +85,8 @@ def show_common(graph, v1, v2, side):
 def local_view_in_word(graph, word, v, to_highlight=None, axis=1):
     values = graph.local_codeword_on_vertex(v, word)
     squares = graph.vertex_to_squares[v]
-    right = graph.vertex_to_neighbours_right[v]
-    left = graph.vertex_to_neighbours_left[v]
+    right = graph.vertex_to_neighbours_B[v]
+    left = graph.vertex_to_neighbours_A[v]
     df = pd.DataFrame(values, index=pd.Index(left), columns=pd.Index(right, name=""))
     s = df.style.format("{:.0f}")
     cell_hover = {  # for row hover use <tr> instead of <td>
@@ -145,10 +145,12 @@ def local_view_in_word(graph, word, v, to_highlight=None, axis=1):
 
 
 def show_common_views_in_word(c3ltc, word, v1, v2, side):
-    if side == "left":
+    if side == "A":
         axis = 1
-    else:
+    elif side == "B":
         axis = 0
+    else:
+        exit(1)
     df1 = local_view_in_word(c3ltc, word, v1, v2, axis)
     df2 = local_view_in_word(c3ltc, word, v2, v1, axis)
 
@@ -166,7 +168,7 @@ def show_square(graph, square):
     df = pd.DataFrame(
         [graph.square_to_vertices[square]],
         index=pd.Index([str(square)]),
-        columns=pd.Index(["vertex", "left", "right", "closing"], name=""),
+        columns=pd.Index(["g", "ag", "gb", "agb"], name=""),
     )
     s = df.style
     cell_hover = {  # for row hover use <tr> instead of <td>
@@ -189,3 +191,35 @@ def show_square(graph, square):
         overwrite=False,
     )
     return s
+
+
+def show_graph(graph, special_vertices = None):
+    nxg = nx.Graph()
+    for v in graph.vertex_to_squares:
+        if special_vertices != None and v in special_vertices:
+            nxg.add_node(
+                v,
+                label=str(v),
+                x=random.randint(10000 / 5, 30000 / 5),
+                y=random.randint(10000 / 5, 30000 / 5),
+                physics=True,
+                color='red'
+            )
+        else:
+            nxg.add_node(
+                v,
+                label=str(v),
+                x=random.randint(10000 / 5, 30000 / 5),
+                y=random.randint(10000 / 5, 30000 / 5),
+                physics=True,
+            )
+    for v in graph.vertex_to_squares:
+        right = graph.vertex_to_neighbours_B[v]
+        left = graph.vertex_to_neighbours_A[v]
+        for i in range(len(right)):
+            nxg.add_edge(
+                v, right[i], title=str(v) + "-" + str(right[i]), color="#d1d1e0"
+            )
+        for i in range(len(left)):
+            nxg.add_edge(v, left[i], title=str(v) + "-" + str(left[i]), color="#d1d1e0")
+    return nxg

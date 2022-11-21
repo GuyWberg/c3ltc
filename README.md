@@ -4,7 +4,7 @@ A Sage implementation of Locally Testable Codes with constant rate, distance and
 
 ## Setup
 
-Requirements:
+### Requirements:
 - Python >= 3.9.
 - [Sage](https://doc.sagemath.org/html/en/installation/index.html). 
 - a C++ compiler supporting C++11 standard.
@@ -15,10 +15,19 @@ On ubunto run:
 ```sudo apt-get install autotools-dev```
 
 After installing the requirements, run the following:
+- Run ``sage -pip install -r requirements.txt``. 
 - Run ``sh setup_spasm.sh`` in the cloned directory.  
 - Then run Jupyter notebook with Sage kernel (``sage -n jupyter``) and open the `c3LTC.ipynb` notebook.  
 
 This implementation uses [spasm](https://github.com/cbouilla/spasm) library for sparse finite fields matrix computation to improve the runtime. 
+
+### Docker
+
+Alternativley, you can run the notebook via docker. 
+```
+docker build -t c3ltc .
+docker run -it -p 8888:8888 c3ltc
+```
 
 ## Example
 ```

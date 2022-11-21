@@ -1,4 +1,3 @@
-@@ -1,225 +0,0 @@
 import networkx as nx
 import pandas as pd
 import numpy as np
@@ -206,51 +205,21 @@ def get_good_view(c3ltc):
             at_leat_one = g
             return g
 
-def show_graph(c3ltc, special = None, special_vertices = None):
-    if not special:
-        special = get_good_view(c3ltc)
+def show_graph(c3ltc, special_vertex = None, special_vertices_set = None):
+    if not special_vertex:
+        special_vertex = get_good_view(c3ltc)
     nxg = nx.Graph()
-    nxg.add_node(
-            str(special),
-            label=str(special),
-            x=int(100),
-            y=int(100),
-            physics=True,
-            color = "#6C7076"
-        )
+    add_node(nxg, special_vertex, list(c3ltc.G).index(special_vertex), special_vertices_set, int(100), int(100))
     for i, a in enumerate(c3ltc.A):
-        nxg.add_node(
-            str(a*special),
-            label=str(a*special),
-                x=int(100 + i * 5),
-                y=int(100 * (2 + i) + i * 5),
-            color="#5692FC"
-        )
+        add_node(nxg, a*special_vertex, list(c3ltc.G).index(a*special_vertex), special_vertices_set, int(100 + i * 5), int(100 * (2 + i) + i * 5), color="#5692FC")
         for j,b in enumerate(c3ltc.B):
-            nxg.add_node(
-                str(special*b),
-                label=str(special*b),
-                x=int(100 * (2 + j) + j * 5),
-                y=int(100 + j * 5),
-                color="#FC6956"
-            )
-            nxg.add_node(
-                str(a*special*b),
-                label=str(a*special*b),
-                    x=int(100 * (2 + j) + (j + 1) * 15),
-                    y=int(100 * (2 + i) + (i + 1) * 15),
-                color = "#6C7076"
-            )
+            add_node(nxg, special_vertex * b, list(c3ltc.G).index(special_vertex * b), special_vertices_set, int(100 * (2 + j) + j * 5), int(100 + j * 5), color="#FC6956")
+            add_node(nxg, a * special_vertex * b, list(c3ltc.G).index(a * special_vertex * b), special_vertices_set, int(100 * (2 + j) + (j + 1) * 15), int(100 * (2 + i) + (i + 1) * 15))
+
 
     for g in c3ltc.G:
         if str(g) not in nxg.nodes:
-            nxg.add_node(
-                str(g),
-                label=str(g),
-                x=random.randint(5000 / 5, 15000 / 5),
-                y=random.randint(5000 / 5, 15000 / 5),
-                color = "#6C7076"
-            )
+            add_node(nxg, g, list(c3ltc.G).index(g), special_vertices_set, random.randint(5000 / 5, 15000 / 5), random.randint(5000 / 5, 15000 / 5))
     for g in c3ltc.G:
         for a in c3ltc.A:
             nxg.add_edge(
@@ -259,3 +228,22 @@ def show_graph(c3ltc, special = None, special_vertices = None):
         for b in c3ltc.B:
             nxg.add_edge(str(g), str(g*b), color="#ffd6cc")       
     return nxg
+
+
+def add_node(nxg, g, index, special_vertices_set, x, y, color = "#6C7076"):
+    if special_vertices_set and index in special_vertices_set:
+        nxg.add_node(
+                str(g),
+                label=str(g),
+                x=x,
+                y=y,
+                color = "#68F67D"
+            )
+    else:
+        nxg.add_node(
+                str(g),
+                label=str(g),
+                x=x,
+                y=y,
+                color = color
+            )

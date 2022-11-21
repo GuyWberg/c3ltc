@@ -16,7 +16,7 @@ def row_reduce_and_orthogonal(sparse_constraints, prime, cols, rows):
     path_to_sms_par = "./par"
     path_to_sms_gen = "./gen"
     args = [
-        "../requirements/spasm/test/kernel",
+        "requirements/spasm/test/kernel",
         str(prime),
         path_to_sms_gen,
         path_to_sms_par,

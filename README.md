@@ -39,7 +39,7 @@ B = random_generators(G,6)
 c3ltc = c3LTC(C_a, C_b, G, A, B)
 ```
 
-The function `c3LTC(c3ltc,vertex)` gets the following parameters:
+The function `c3LTC(C_a, C_b, G, A, B)` gets the following parameters:
 
 - `C_a` - Sage code object.
 - `C_b` - Sage code object.

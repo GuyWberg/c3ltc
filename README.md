@@ -64,7 +64,7 @@ Shows the local views of square numbers ("labels") for the two vertices with hig
 - `c3ltc` - c3LTC object
 - `vertex1` - number from 1 to the number of vertices in the graph.
 - `vertex2` - number from 1 to the number of vertices in the graph.
-- `side` - "left"/"right" (depends on vertex1 being left (accosted with rows) neighbor of vertex2 or right (associated with columns) neighbors)
+- `side` - "A"/"B" (depends on vertex1 being A-neighbor (associated with rows) neighbor of vertex2 or B-neighbor (associated with columns) neighbors)
 
 ```local_view_in_word(c3ltc,word,vertex)```
 

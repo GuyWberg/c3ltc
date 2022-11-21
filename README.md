@@ -18,7 +18,7 @@ After installing the requirements, run the following:
 - Run ``sh setup_spasm.sh`` in the cloned directory.  
 - Then run Jupyter notebook with Sage kernel (``sage -n jupyter``) and open the `c3LTC.ipynb` notebook.  
 
-This implementation uses (spasm)[https://github.com/cbouilla/spasm] library for sparse finite fields matrix computation to improve the runtime. 
+This implementation uses [spasm](https://github.com/cbouilla/spasm) library for sparse finite fields matrix computation to improve the runtime. 
 
 ### Example
 ```

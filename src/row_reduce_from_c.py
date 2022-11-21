@@ -3,6 +3,7 @@ import time
 from scipy.sparse import csr_matrix, coo_matrix
 import os
 
+
 def row_reduce_and_orthogonal(sparse_constraints, prime, cols, rows):
     print("[*] Start row reduce from c")
     name = "./tmp"

@@ -17,7 +17,7 @@ def local_view(graph, v, to_highlight=None, axis=1):
         graph.vertex_to_squares[v], index=pd.Index(left), columns=pd.Index(right, name="")
     )
     s = df.style.format("{:.0f}")
-    cell_hover = {  
+    cell_hover = {
         "selector": "td:hover",
         "props": [("background-color", "#99ccff")],
     }
@@ -192,58 +192,63 @@ def show_square(graph, square):
     )
     return s
 
+
 def get_good_view(c3ltc):
     for g in c3ltc.G:
         s = set([])
         s.add(g)
         for a in c3ltc.A:
-            s.add(a*g)
+            s.add(a * g)
             for b in c3ltc.B:
-                s.add(g*b)
-                s.add(a*g*b)
-        if len(s) == (len(c3ltc.A) + 1) * (len(c3ltc.B)+1):
+                s.add(g * b)
+                s.add(a * g * b)
+        if len(s) == (len(c3ltc.A) + 1) * (len(c3ltc.B) + 1):
             at_leat_one = g
             return g
 
-def show_graph(c3ltc, special_vertex = None, special_vertices_set = None):
+
+def show_graph(c3ltc, special_vertex=None, special_vertices_set=None):
     if not special_vertex:
         special_vertex = get_good_view(c3ltc)
     nxg = nx.Graph()
     add_node(nxg, special_vertex, list(c3ltc.G).index(special_vertex), special_vertices_set, int(100), int(100))
     for i, a in enumerate(c3ltc.A):
-        add_node(nxg, a*special_vertex, list(c3ltc.G).index(a*special_vertex), special_vertices_set, int(100 + i * 5), int(100 * (2 + i) + i * 5), color="#5692FC")
-        for j,b in enumerate(c3ltc.B):
-            add_node(nxg, special_vertex * b, list(c3ltc.G).index(special_vertex * b), special_vertices_set, int(100 * (2 + j) + j * 5), int(100 + j * 5), color="#FC6956")
-            add_node(nxg, a * special_vertex * b, list(c3ltc.G).index(a * special_vertex * b), special_vertices_set, int(100 * (2 + j) + (j + 1) * 15), int(100 * (2 + i) + (i + 1) * 15))
-
+        add_node(nxg, a * special_vertex, list(c3ltc.G).index(a * special_vertex), special_vertices_set,
+                 int(100 + i * 5), int(100 * (2 + i) + i * 5), color="#5692FC")
+        for j, b in enumerate(c3ltc.B):
+            add_node(nxg, special_vertex * b, list(c3ltc.G).index(special_vertex * b), special_vertices_set,
+                     int(100 * (2 + j) + j * 5), int(100 + j * 5), color="#FC6956")
+            add_node(nxg, a * special_vertex * b, list(c3ltc.G).index(a * special_vertex * b), special_vertices_set,
+                     int(100 * (2 + j) + (j + 1) * 15), int(100 * (2 + i) + (i + 1) * 15))
 
     for g in c3ltc.G:
         if str(g) not in nxg.nodes:
-            add_node(nxg, g, list(c3ltc.G).index(g), special_vertices_set, random.randint(5000 / 5, 15000 / 5), random.randint(5000 / 5, 15000 / 5))
+            add_node(nxg, g, list(c3ltc.G).index(g), special_vertices_set, random.randint(5000 / 5, 15000 / 5),
+                     random.randint(5000 / 5, 15000 / 5))
     for g in c3ltc.G:
         for a in c3ltc.A:
             nxg.add_edge(
-                str(a*g),str(g), color="#cce6ff"
+                str(a * g), str(g), color="#cce6ff"
             )
         for b in c3ltc.B:
-            nxg.add_edge(str(g), str(g*b), color="#ffd6cc")       
+            nxg.add_edge(str(g), str(g * b), color="#ffd6cc")
     return nxg
 
 
-def add_node(nxg, g, index, special_vertices_set, x, y, color = "#6C7076"):
+def add_node(nxg, g, index, special_vertices_set, x, y, color="#6C7076"):
     if special_vertices_set and index in special_vertices_set:
         nxg.add_node(
-                str(g),
-                label=str(g),
-                x=x,
-                y=y,
-                color = "#68F67D"
-            )
+            str(g),
+            label=str(g),
+            x=x,
+            y=y,
+            color="#68F67D"
+        )
     else:
         nxg.add_node(
-                str(g),
-                label=str(g),
-                x=x,
-                y=y,
-                color = color
-            )
+            str(g),
+            label=str(g),
+            x=x,
+            y=y,
+            color=color
+        )

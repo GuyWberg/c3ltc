@@ -4,7 +4,7 @@ A Sage implementation of Locally Testable Codes with constant rate, distance and
 
 ## Setup
 
-### Requirements:
+### Requirements
 - Python >= 3.9.
 - [Sage](https://doc.sagemath.org/html/en/installation/index.html). 
 - a C++ compiler supporting C++11 standard.

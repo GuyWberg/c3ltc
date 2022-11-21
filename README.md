@@ -23,7 +23,7 @@ This implementation uses [spasm](https://github.com/cbouilla/spasm) library for 
 
 ### Docker
 
-Alternativley, you can run the notebook via docker. 
+Alternativley, you can run the notebook via [Docker](https://docs.docker.com/get-docker/). 
 ```
 docker build -t c3ltc .
 docker run -it -p 8888:8888 c3ltc

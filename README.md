@@ -2,7 +2,7 @@
 
 A Sage implementation of Locally Testable Codes with constant rate, distance and locality based on the construction from [Dinur et al](https://arxiv.org/abs/2111.04808). 
 
-### Setup
+## Setup
 
 Requirements:
 - Python >= 3.9.
@@ -20,7 +20,7 @@ After installing the requirements, run the following:
 
 This implementation uses [spasm](https://github.com/cbouilla/spasm) library for sparse finite fields matrix computation to improve the runtime. 
 
-### Example
+## Example
 ```
 G = PSL(2,7)
 C_a = ReedSolomonCode(GF(7), Integer(6), Integer(4))
@@ -39,7 +39,7 @@ The function `c3LTC(c3ltc,vertex)` gets the following parameters:
 - `B` - a list of Sage group elements.
 
 
-### Local view display
+## Local view display
 
 ```local_view(c3ltc,vertex)```
 

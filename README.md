@@ -9,7 +9,7 @@ A Sage implementation of Locally Testable Codes with constant rate, distance and
 - [Sage](https://doc.sagemath.org/html/en/installation/index.html). 
 - a C++ compiler supporting C++11 standard.
 - [Jupyter](https://jupyter.org/install).
-- You also need to have make tools. On macOS run:
+- You also need ``make`` tools. On macOS run:
 ```brew install autoconf automake libtool```
 On ubunto run:
 ```sudo apt-get install autotools-dev```

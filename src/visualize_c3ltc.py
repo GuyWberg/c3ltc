@@ -210,16 +210,18 @@ def get_good_view(c3ltc):
 def show_graph(c3ltc, special_vertex=None, special_vertices_set=None):
     if not special_vertex:
         special_vertex = get_good_view(c3ltc)
-    nxg = nx.Graph()
-    add_node(nxg, special_vertex, list(c3ltc.G).index(special_vertex), special_vertices_set, int(100), int(100))
-    for i, a in enumerate(c3ltc.A):
-        add_node(nxg, a * special_vertex, list(c3ltc.G).index(a * special_vertex), special_vertices_set,
-                 int(100 + i * 5), int(100 * (2 + i) + i * 5), color="#5692FC")
-        for j, b in enumerate(c3ltc.B):
-            add_node(nxg, special_vertex * b, list(c3ltc.G).index(special_vertex * b), special_vertices_set,
-                     int(100 * (2 + j) + j * 5), int(100 + j * 5), color="#FC6956")
-            add_node(nxg, a * special_vertex * b, list(c3ltc.G).index(a * special_vertex * b), special_vertices_set,
-                     int(100 * (2 + j) + (j + 1) * 15), int(100 * (2 + i) + (i + 1) * 15))
+
+    if special_vertex: 
+        nxg = nx.Graph()
+        add_node(nxg, special_vertex, list(c3ltc.G).index(special_vertex), special_vertices_set, int(100), int(100))
+        for i, a in enumerate(c3ltc.A):
+            add_node(nxg, a * special_vertex, list(c3ltc.G).index(a * special_vertex), special_vertices_set,
+                     int(100 + i * 5), int(100 * (2 + i) + i * 5), color="#5692FC")
+            for j, b in enumerate(c3ltc.B):
+                add_node(nxg, special_vertex * b, list(c3ltc.G).index(special_vertex * b), special_vertices_set,
+                         int(100 * (2 + j) + j * 5), int(100 + j * 5), color="#FC6956")
+                add_node(nxg, a * special_vertex * b, list(c3ltc.G).index(a * special_vertex * b), special_vertices_set,
+                         int(100 * (2 + j) + (j + 1) * 15), int(100 * (2 + i) + (i + 1) * 15))
 
     for g in c3ltc.G:
         if str(g) not in nxg.nodes:

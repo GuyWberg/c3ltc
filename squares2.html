@@ -1,0 +1,80 @@
+<!doctype html>
+ <html lang="en">
+ <head>
+ <meta charset="UTF-8">
+ <title>JSXGraph template</title>
+ <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+   <link href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" rel="stylesheet" type="text/css" />
+ <script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js" charset="UTF-8"></script>
+ <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+ </head>
+<body>
+<div id="jxgbox" class="jxgbox" style="max-width:1800px; aspect-ratio: 1/1;"></div>
+ <script>
+  var board = JXG.JSXGraph.initBoard('jxgbox', {boundingbox: [-2000, 2000, 2000, -2000]});
+var p0 = board.create('point', [1875.4924422920951,-1392.2997387183332], {withLabel: true, name: '(0, 0)'});
+var p1 = board.create('point', [2919.716957439185,-1199.5489397080505], {withLabel: true, name: '(0, 1)'});
+var p2 = board.create('point', [1553.1357361531664,-1159.9121037988252], {withLabel: true, name: '(0, 2)'});
+var p3 = board.create('point', [2502.7840615024743,-1394.0618408337928], {withLabel: true, name: '(1, 0)'});
+var p4 = board.create('point', [2150.340677246263,-1295.9908190457784], {withLabel: true, name: '(1, 1)'});
+var p5 = board.create('point', [2803.361457768615,-593.0049817097791], {withLabel: true, name: '(1, 2)'});
+var p6 = board.create('point', [2662.1707350446577,-708.2345257328393], {withLabel: true, name: '(2, 0)'});
+var p7 = board.create('point', [2635.4168232187376,-106.88769107694202], {withLabel: true, name: '(2, 1)'});
+var p8 = board.create('point', [1981.228457681132,-1206.5680615460606], {withLabel: true, name: '(2, 2)'});
+var eA0 = board.create('line', [p0,p3], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eA1 = board.create('line', [p4,p7], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eA2 = board.create('line', [p0,p6], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eA3 = board.create('line', [p5,p8], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eA4 = board.create('line', [p1,p7], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eA5 = board.create('line', [p1,p4], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eA6 = board.create('line', [p3,p6], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eA7 = board.create('line', [p2,p5], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eA8 = board.create('line', [p2,p8], {straightFirst:false, straightLast:false,strokeColor:'#FA6F49'});
+var eB0= board.create('line', [p6,p7], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var eB1= board.create('line', [p1,p2], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var eB2= board.create('line', [p3,p5], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var eB3= board.create('line', [p0,p1], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var eB4= board.create('line', [p3,p4], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var eB5= board.create('line', [p6,p8], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var eB6= board.create('line', [p0,p2], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var eB7= board.create('line', [p4,p5], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var eB8= board.create('line', [p7,p8], {straightFirst:false, straightLast:false,strokeColor:'#5B67FE'});
+var pol0 = board.create('polygon', [p0, p3, p4, p1],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol1 = board.create('polygon', [p0, p3, p5, p2],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol2 = board.create('polygon', [p4, p7, p8, p5],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol3 = board.create('polygon', [p3, p6, p7, p4],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol4 = board.create('polygon', [p6, p0, p1, p7],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol5 = board.create('polygon', [p6, p0, p2, p8],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol6 = board.create('polygon', [p3, p6, p8, p5],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol7 = board.create('polygon', [p4, p7, p8, p5],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol8 = board.create('polygon', [p7, p1, p2, p8],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol9 = board.create('polygon', [p6, p0, p1, p7],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol10 = board.create('polygon', [p1, p4, p5, p2],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol11 = board.create('polygon', [p0, p3, p4, p1],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol12 = board.create('polygon', [p3, p6, p7, p4],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol13 = board.create('polygon', [p3, p6, p8, p5],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol14 = board.create('polygon', [p0, p3, p5, p2],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol15 = board.create('polygon', [p1, p4, p5, p2],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol16 = board.create('polygon', [p6, p0, p2, p8],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol17 = board.create('polygon', [p7, p1, p2, p8],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol18 = board.create('polygon', [p6, p0, p1, p7],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol19 = board.create('polygon', [p3, p6, p7, p4],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol20 = board.create('polygon', [p1, p4, p5, p2],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol21 = board.create('polygon', [p7, p1, p2, p8],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol22 = board.create('polygon', [p3, p6, p8, p5],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol23 = board.create('polygon', [p0, p3, p5, p2],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol24 = board.create('polygon', [p0, p3, p4, p1],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol25 = board.create('polygon', [p6, p0, p1, p7],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol26 = board.create('polygon', [p3, p6, p7, p4],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol27 = board.create('polygon', [p0, p3, p4, p1],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol28 = board.create('polygon', [p6, p0, p2, p8],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol29 = board.create('polygon', [p3, p6, p8, p5],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol30 = board.create('polygon', [p0, p3, p5, p2],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol31 = board.create('polygon', [p6, p0, p2, p8],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol32 = board.create('polygon', [p4, p7, p8, p5],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol33 = board.create('polygon', [p1, p4, p5, p2],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol34 = board.create('polygon', [p7, p1, p2, p8],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+var pol35 = board.create('polygon', [p4, p7, p8, p5],{fillOpacity: 0.25,fillColor: '#B6FADB',hasInnerPoints: true});
+</script>
+ </body>
+</html>

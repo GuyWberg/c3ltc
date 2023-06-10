@@ -1,0 +1,6 @@
+ipython
+networkx
+pandas
+numpy
+galois
+scipy

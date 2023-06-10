@@ -1,0 +1,10 @@
+mkdir requirements; 
+cd requirements; 
+git clone https://github.com/cbouilla/spasm;
+cd ..;
+cp setup/kernel.c requirements/spasm/test;
+cd requirements/spasm;
+autoreconf -i;
+./configure && make;
+cd test;
+make kernel;

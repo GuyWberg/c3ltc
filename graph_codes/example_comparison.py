@@ -10,9 +10,9 @@ from local_codes.linear_code import LinearCode
 from local_codes.linear_code_utils import get_min_dist, get_max_dist
 from local_codes.rlc import RandomLinearCode
 from local_codes.rs_code import ReedSolomonCode
-from epsilon_biased.epsilon_biased import get_epsilon_biased_space_sampler
+# from epsilon_biased.epsilon_biased import get_epsilon_biased_space_sampler
 from groups.generators import get_AB_with_TNC, get_random_generators
-from groups.psl_group import PSL
+from groups.psl_group import PSL, PSLElement
 from graphs.cayley import CayleyGraph
 from groups.Fqm import Fqm, FqmElement
 from groups.group import Group
@@ -64,32 +64,14 @@ def matrix_to_list_of_generators(generator, prime, k):
 
 
 def random_code(n, k, prime):
-    code = RandomLinearCode.get_random_linear_code(n, k, prime)
+    code = RandomLinearCode.get_random_linear_code(n, k, prime, 0)
     A = matrix_to_list_of_generators(code.generator, prime, k)
     while len(set(A)) != len(A):
-        code = RandomLinearCode.get_random_linear_code(n, k, prime)
+        code = RandomLinearCode.get_random_linear_code(n, k, prime, 0)
         A = matrix_to_list_of_generators(code.generator, prime, k)
     print("[*] Found code")
     return code.generator
 
-
-def sample_epsilon_biased_code(n, k, epsilon=0.1):
-    sampler = get_epsilon_biased_space_sampler(n, epsilon)
-    code = []
-    for i in range(k):
-        code.append(sampler())
-    generator = numpy.array(code).transpose()
-    zero = FqmElement(numpy.array([0] * n), 2, k)
-    A = [FqmElement(numpy.array(r), 2, k) for r in generator.tolist()]
-    while len(set(A)) != len(A) or zero in A:
-        sampler = get_epsilon_biased_space_sampler(n, epsilon)
-        code = []
-        for i in range(k):
-            code.append(sampler())
-        generator = numpy.array(code).transpose()
-        A = [FqmElement(numpy.array(r), 2, k) for r in generator.tolist()]
-    print("[*] Found code")
-    return generator.transpose()
 
 
 def get_non_zero_squares(word):
@@ -104,11 +86,14 @@ def get_non_zero_squares(word):
 # Code
 #############################
 
-prime_code = 7
-n, kb = 6, 4
+prime_code = 13
+n, kb = 12, 6
 
 code = ReedSolomonCode.get_rs_code(n, kb, prime_code)
+# code = RandomLinearCode.get_random_linear_code(n, kb, prime_code,1)
 # code = get_code_from_parity(numpy.array([[1]*n],dtype=int),2,"CycleCode")
+
+print("Inner Code:", code.name)
 
 #############################
 # Group

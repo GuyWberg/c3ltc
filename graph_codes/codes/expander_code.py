@@ -51,7 +51,7 @@ class ExpanderCode:
             self.n = self.generator.shape[1]
         self.rate = self.k / self.n
         self.name += " k=" + str(self.k) + " n=" + str(self.n) + " rate=" + str(self.rate)[:6]
-        self.save_code(test)
+        # self.save_code(test)
         print("[*] Finished generating code")
 
     def save_code(self, test=0):

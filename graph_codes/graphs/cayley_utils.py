@@ -7,94 +7,86 @@ edge_id_type = types.int64
 array_of_vertices = types.int64[:]
 array_of_edge_ids = types.int64[:]
 
-edge_type = types.UniTuple(
-    types.int64,
-    2,
-)
+edge_type = types.UniTuple(types.int64, 2)
 square_label_type = types.int64
 vertex = types.int64
 counter_type = types.int64
 neighbour_number = types.int64
 
-
 @jit(nopython=True, cache=True)
 def get_id(vertices, g):
     """
     Returns the vertex corresponding to group element g.
-
-    Keyword arguments:
     vertices - hash(group element) -> vertex id
     g - group element.
     """
-    if hash(g) in vertices:
-        return vertices[hash(g)]
+    h = hash(g)
+    if h in vertices:
+        return vertices[h]
     return -1
-
 
 def create_cayley_graph(group_elements, vertices, gens):
     """
     Returns a graph defined by the following mappings:
         vertex_to_edges - vertex -> an array of edge ids.
         vertex_to_neighbours - vertex -> an array of neighbouring vertices.
-
+    
     Keyword arguments:
-    group_elements - list of group elements.
-    vertices - hash(group element) -> vertex id.
-    gens - list of generating group elements.
+      group_elements - list of group elements.
+      vertices       - hash(group element) -> vertex id.
+      gens           - list of generating group elements.
     """
     group_size = len(group_elements)
-    vertex_to_edges = Dict.empty(
-        key_type=vertex,
-        value_type=array_of_edge_ids,
-    )
-    edges_to_ids = Dict.empty(
-        key_type=edge_type,
-        value_type=edge_id_type,
-    )
-    vertex_to_neighbours = Dict.empty(
-        key_type=vertex,
-        value_type=array_of_vertices,
-    )
-    # init empty placeholder arrays to be filled
+    
+    vertex_to_edges = Dict.empty(key_type=vertex, value_type=array_of_edge_ids)
+    edges_to_ids = Dict.empty(key_type=edge_type, value_type=edge_id_type)
+    vertex_to_neighbours = Dict.empty(key_type=vertex, value_type=array_of_vertices)
+    
+    # Initialize the dictionaries with arrays of zeros.
     for v in range(group_size):
-        vertex_to_edges[v] = numpy.array([0] * len(gens))
-        vertex_to_neighbours[v] = numpy.array([0] * len(gens))
+        vertex_to_edges[v] = numpy.zeros(len(gens), dtype=numpy.int64)
+        vertex_to_neighbours[v] = numpy.zeros(len(gens), dtype=numpy.int64)
+    
     edge_id = 0
     for g in group_elements:
         v = get_id(vertices, g)
         for k in range(len(gens)):
-            (a1, g1,) = get_edge_unique_representation(gens[k], g, vertices)
-            edge = (
-                gens.index(a1),
-                get_id(vertices, g1),
-            )
-            # check if the edge has already appeared
+            # Update vertex_to_neighbours: the neighbour of vertex g via gens[k] is gens[k] * g.
+            neighbour = get_id(vertices, gens[k] * g)
+            vertex_to_neighbours[v][k] = neighbour
+
+            # Get the unique representation for the edge.
+            (a1, g1) = get_edge_unique_representation(gens[k], g, vertices)
+            edge = (gens.index(a1), get_id(vertices, g1))
+            
+            # Update vertex_to_edges.
             if edge in edges_to_ids:
                 vertex_to_edges[v][k] = edges_to_ids[edge]
             else:
                 edges_to_ids[edge] = edge_id
                 vertex_to_edges[v][k] = edge_id
                 edge_id += 1
+    # Use integer division in the assertion.
     assert edge_id == len(group_elements) * len(gens) / 2
     return vertex_to_edges, vertex_to_neighbours
 
-
 def get_edge_unique_representation(a, g, vertices):
     """
-    Returns a unique triplet of group elements representing the square (a, g, b).
-
+    Returns a unique pair of group elements representing an undirected edge.
+    (The docstring says “triplet” but currently it returns a pair.)
+    
     Keyword arguments:
-    a - group element.
-    g - group element.
-    b - group element.
-    vertices - hash(group element) -> vertex id
+      a        - group element (generator).
+      g        - group element.
+      vertices - hash(group element) -> vertex id.
     """
     a_inv = a.invert()
     ag = a * g
     v_g = get_id(vertices, g)
     v_ag = get_id(vertices, ag)
-    min_vertex_index = min(v_g, v_ag)
-    if min_vertex_index == v_g:
+    
+    # Choose the representation so that the edge is always associated with the lower-indexed vertex.
+    if v_g < v_ag:
         return a, g
-    elif min_vertex_index == v_ag:
+    else:
         return a_inv, ag

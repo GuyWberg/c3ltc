@@ -85,21 +85,40 @@ def brute_force_decoding(generator, noisy_word, prime):
     return closest_word
 
 
+def base(number, base, length):
+    '''
+    Converts a number to a list representation in the given base with a fixed length.
+    '''
+    digits = []
+    while number:
+        digits.append(number % base)
+        number //= base
+    while len(digits) < length:
+        digits.append(0)
+    return digits[::-1]
+
+def encode(generator, message, prime):
+    '''
+    Encodes a message using the generator matrix in the given prime field.
+    '''
+    return numpy.mod(numpy.dot(message, generator), prime)
+
 def get_min_dist(generator, prime):
     '''
     Returns the word with the smallest Hamming weight (the minimal distance) in the code defined by the given generator matrix.
     '''
-    all_messages_size = int(pow(prime, generator.shape[0]))
     k = generator.shape[0]
     n = generator.shape[1]
+    all_messages_size = int(pow(prime, k))
     min_dist = n
-    for m in range(all_messages_size):
-        message = numpy.array([0] * k)
-        number_to_base(message, m, prime)
+    
+    for m in range(1, all_messages_size):  # Excluding zero message
+        message = base(m, prime, k)
         word = encode(generator, message, prime)
-        if numpy.count_nonzero(word) > 0:
-            min_dist = min(min_dist, numpy.count_nonzero(word))
+        min_dist = min(min_dist, numpy.count_nonzero(word))
+    
     return min_dist
+
 
 
 def get_max_dist(generator, prime):

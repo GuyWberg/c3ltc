@@ -66,7 +66,7 @@ class c3LTC:
             self.n = self.generator.shape[1]
         self.rate = self.k / self.n
         self.name += " k=" + str(self.k) + " n=" + str(self.n) + " rate=" + str(self.rate)[:6]
-        self.save_code(test)
+        # self.save_code(test)
         print("[*] Finished generating code")
 
     def decode_along_the_vertices(self, noisy_word):

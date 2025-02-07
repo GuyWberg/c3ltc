@@ -18,37 +18,30 @@ class RandomLinearCode:
         n,
         k,
         prime,
+        test = 0
     ):
         prime = prime
         name = "RLC_q_" + str(prime) + "_n_" + str(n) + "_k_" + str(k)
         min_dist = -1
         generator = numpy.array([[0]])
-        while min_dist < 3 or generator.shape != (
-            k,
-            n,
-        ):
-            parity = numpy.random.randint(
-                0,
-                high=prime,
-                size=(
-                    n - k,
-                    n,
-                ),
-                dtype=int,
-            )
-            generator = numpy.array(
-                galois.GF(prime)(parity).null_space(),
-                dtype=int,
-            )
-            min_dist = get_min_dist(
-                generator,
-                prime,
-            )
-        syndromes = get_syndromes(
-            parity,
-            generator,
-            prime,
+       
+        parity = numpy.random.randint(
+            0,
+            high=prime,
+            size=(
+                n - k,
+                n,
+            ),
+            dtype=int,
         )
+        generator = numpy.array(
+            galois.GF(prime)(parity).null_space(),
+            dtype=int,
+        )
+        min_dist = None 
+
+        syndromes = None 
+
         return LinearCode(
             generator,
             parity,

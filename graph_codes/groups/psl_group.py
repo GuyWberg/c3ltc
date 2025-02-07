@@ -88,9 +88,17 @@ class PSLElement:
             ) and self._q == other.q
         else:
             return False
+    
+    def order(self):
+        order = 1
+        tmp = PSLElement(self.value, self._q)
+        while not tmp.is_identity():
+            tmp = self * tmp
+            order += 1
+        return order
 
     def is_non_identity_order_2(self):  # is of order 2 and non-identity
-        return (self * self).is_identity() and not self.is_identity()
+        return self.order() == 2 and not self.is_identity()
 
     def invert(self):
         return PSLElement(

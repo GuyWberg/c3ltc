@@ -1,4 +1,4 @@
-FROM sagemath/sagemath:latest
+FROM sagemath/sagemath:9.7
 
 WORKDIR ./home
 

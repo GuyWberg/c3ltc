@@ -4,7 +4,7 @@ from scipy.sparse import csr_matrix, coo_matrix
 import os
 
 
-def row_reduce_and_orthogonal(sparse_constraints, prime, cols, rows):
+def row_reduce_and_orthogonal(sparse_constraints, prime, cols, rows, test = 0):
     print("[*] Start row reduce from c")
     name = "./tmp"
     with open(name, "w+") as file:
@@ -22,6 +22,7 @@ def row_reduce_and_orthogonal(sparse_constraints, prime, cols, rows):
         path_to_sms_gen,
         path_to_sms_par,
         name,
+        str(test),
     ]
     start = time.time()
     proc = subprocess.Popen(args, stdout=subprocess.PIPE)
@@ -31,13 +32,19 @@ def row_reduce_and_orthogonal(sparse_constraints, prime, cols, rows):
             break
     end = time.time()
     print("[*] Actual time in c", end - start)
-    gen = convert_sms_to_dense(path_to_sms_gen, prime)
-    par = convert_sms_to_dense(path_to_sms_par, prime)
-    os.remove(path_to_sms_par)
-    os.remove(path_to_sms_gen)
-    os.remove(name)
+    if test:
+        gen = convert_sms_to_dense(path_to_sms_gen)
+        os.remove(path_to_sms_gen)
+    if not test:
+        gen = convert_sms_to_dense(path_to_sms_gen)
+        os.remove(path_to_sms_gen)
+        par = convert_sms_to_dense(path_to_sms_par)
+        os.remove(path_to_sms_par)
     print("[*] Finished row reduce from c")
-    return gen, par
+    if test:
+        return gen
+    else:
+        return gen, par
 
 
 def get_matrix_content(sparse_constraints):
@@ -49,22 +56,20 @@ def get_matrix_content(sparse_constraints):
     return content
 
 
-def convert_sms_to_dense(sms_file, prime):
+def convert_sms_to_dense(sms_file):
     file = open(sms_file, "r")
     lines = file.readlines()
     data = []
     row = []
     col = []
     for line in lines:
-        if "M" in line and line[0] == '0':
-            raise "No rate"
+        if "M" in line and line[0] == "0":
+            raise Exception("No rate")
         if "M" not in line and "0 0 0" not in line:
             s = line.strip().split(" ")
             r = int(s[0])
             c = int(s[1])
             v = int(s[2])
-            if v < 0:
-                v = prime + v
             data.append(v)
             row.append(r - 1)
             col.append(c - 1)

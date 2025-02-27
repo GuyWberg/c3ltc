@@ -8,6 +8,7 @@ int main(int argc, char **argv) {
     char *gen = argv[2];
     char *par = argv[3];
     FILE *f = fopen(argv[4], "r");
+    int get_par = atoi(argv[5]);
     spasm_triplet *T = spasm_load_sms(f, field);
     fclose(f);
     spasm *A = spasm_compress(T);
@@ -18,10 +19,12 @@ int main(int argc, char **argv) {
     FILE *fp = fopen(gen, "w+");
     spasm_save_csr(fp, K);
     fclose(fp);
-    K = spasm_kernel(K, SPASM_IDENTITY_PERMUTATION);
-    fp = fopen(par, "w+");
-    spasm_save_csr(fp, K);
-    fclose(fp);
+    if (get_par == 0){
+        K = spasm_kernel(K, SPASM_IDENTITY_PERMUTATION);
+        fp = fopen(par, "w+");
+        spasm_save_csr(fp, K);
+        fclose(fp);
+    }
     spasm_csr_free(A_t);
     spasm_csr_free(A);
     spasm_csr_free(K);

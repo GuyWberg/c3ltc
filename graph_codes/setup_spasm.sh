@@ -1,6 +1,9 @@
 mkdir requirements; 
 cd requirements; 
 git clone https://github.com/cbouilla/spasm;
+cd spasm; 
+git checkout 1ea2bf7; 
+cd ..;
 cd ..;
 cp setup/kernel.c requirements/spasm/test;
 cd requirements/spasm;
